@@ -1,11 +1,17 @@
 import * as express from 'express';
+import * as cors from 'cors';
+// import userController from './controllers/userController';
+
+// https://medium.com/@pmhegdek/oop-in-typescript-express-server-d9368b97740e
 
 class App {
   public app: express.Express;
   // ...
 
   constructor() {
-    // ...
+    this.app = express();
+    this.app.use(cors());
+    this.app.use(express.json());
     this.config();
     // ...
   }
@@ -19,16 +25,19 @@ class App {
     };
 
     this.app.use(accessControl);
+    // this.app.use(express.json());
+    // this.app.use(cors());
     // ...
   }
 
   // ...
   public start(PORT: string | number):void {
-    // ...
+    this.app.listen(PORT, () => console.log(`Rodando em http://localhost:${PORT}/`));
+    // this.app.use('/login', userController.login);
   }
 }
 
-export { App };
-
 // A execução dos testes de cobertura depende dessa exportação
 export const { app } = new App();
+
+export { App };
