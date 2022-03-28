@@ -7,7 +7,13 @@ export interface Token {
   token: string,
 }
 
-export interface User {
+export interface UserFullData extends LoginInput {
+  id: number,
+  username: string,
+  role: string,
+}
+
+export interface UserI {
   id: number,
   username: string,
   role: string,
@@ -15,6 +21,6 @@ export interface User {
 }
 
 export interface LoginOutput {
-  user: User,
+  user: UserI,
   token: Token,
 }

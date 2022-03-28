@@ -1,14 +1,14 @@
-// import { Request, Response } from 'express';
-// import UserService from '../services/UserService';
+import { Request, Response } from 'express';
+import UserService from '../services/UserService';
 
-// const login = async (req: Request, res: Response) => {
-//   const { email, password } = req.body;
-//   const makeLogin = await UserService.login(email, password);
-//   if (makeLogin) {
-//     return res.status(makeLogin.status).json({ message: makeLogin.message });
-//   }
-//   const { token } = makeLogin;
-//   return res.status(makeLogin.status).json({ token });
-// };
+const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  console.log(req.body);
+  const makeLogin = await UserService.login(email, password);
+  if (typeof (makeLogin) === 'string') {
+    return res.status(401).json({ message: makeLogin });
+  }
+  return res.status(200).json(makeLogin);
+};
 
-// export default { login };
+export default { login };

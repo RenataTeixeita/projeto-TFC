@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as cors from 'cors';
-// import userController from './controllers/userController';
+import userController from './controllers/userController';
 
 // https://medium.com/@pmhegdek/oop-in-typescript-express-server-d9368b97740e
 
@@ -25,15 +25,13 @@ class App {
     };
 
     this.app.use(accessControl);
-    // this.app.use(express.json());
-    // this.app.use(cors());
     // ...
   }
 
   // ...
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => console.log(`Rodando em http://localhost:${PORT}/`));
-    // this.app.use('/login', userController.login);
+    this.app.post('/login', userController.login);
   }
 }
 
