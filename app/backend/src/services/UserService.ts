@@ -1,28 +1,24 @@
+import bcryptjs = require('bcryptjs');
 import { UserI } from '../interfaces/UsersInterface';
 // import { UserFullData } from '../interfaces/UsersInterface';
 import Users from '../database/models/Users';
+import verifyLogin from '../middlewares/verifyLogin';
 import createToken from '../middlewares/createToken';
-import schemaLogin from '../middlewares/schemaLogin';
+// import schemaLogin from '../middlewares/schemaLogin';
 
-const login = async (email: string, passwordInput: string) => {
-  try {
-    const { error } = schemaLogin.validate({ email, passwordInput });
-    if (error) return error.details[0].message;
-    // if (userSearch.password ==!password) return 'Incorrect email or password';
-  } catch (err) {
-    console.log(err);
-  }
-
+const login = async (email: string, password: string) => {
+  const correctLogin = await verifyLogin(email, password);
+  if (correctLogin) return correctLogin;
   const userSearch = await Users.findOne({ where: { email } });
-
   if (!userSearch) {
     return 'Incorrect email or password';
   }
+  const validPassword = bcryptjs.compareSync(password, userSearch.password);
+  if (validPassword === false) {
+    return 'Incorrect email or password';
+  }
 
-  // const { id, username, role, password } = userSearch as unknown as UserFullData;
   const { id, username, role } = userSearch as unknown as UserI;
-
-  // if (!userSearch || password ==! passwordInput) {
 
   const token = createToken({ email, id, username, role });
   const result = {
