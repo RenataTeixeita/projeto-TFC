@@ -1,18 +1,19 @@
 import bcryptjs = require('bcryptjs');
 import { UserI } from '../interfaces/UsersInterface';
-// import { UserFullData } from '../interfaces/UsersInterface';
 import Users from '../database/models/Users';
-import verifyLogin from '../middlewares/verifyLogin';
 import createToken from '../middlewares/createToken';
-// import schemaLogin from '../middlewares/schemaLogin';
+import verifyLogin from '../middlewares/verifyLogin';
 
 const login = async (email: string, password: string) => {
   const correctLogin = await verifyLogin(email, password);
   if (correctLogin) return correctLogin;
+
   const userSearch = await Users.findOne({ where: { email } });
-  if (!userSearch) {
+
+  if (userSearch === null) {
     return 'Incorrect email or password';
   }
+
   const validPassword = bcryptjs.compareSync(password, userSearch.password);
   if (validPassword === false) {
     return 'Incorrect email or password';
