@@ -1,13 +1,11 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
-// import chaiHttp from 'chai-http';
 import chaiHttp = require('chai-http');
 // @ts-ignore
 import jwt = require('jsonwebtoken');
 
 import { app } from '../app';
-// import Example from '../database/models/ExampleModel';
 import Users from '../database/models/Users';
 
 import { Response } from 'superagent';

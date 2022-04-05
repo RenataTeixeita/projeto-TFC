@@ -1,8 +1,12 @@
 import bcryptjs = require('bcryptjs');
+// import jwt = require('jsonwebtoken');
+// import fs = require('fs');
 import { UserI } from '../interfaces/UsersInterface';
 import Users from '../database/models/Users';
 import createToken from '../middlewares/createToken';
 import verifyLogin from '../middlewares/verifyLogin';
+
+// const secret = fs.readFileSync('jwt.evaluation.key', 'utf-8');
 
 const login = async (email: string, password: string) => {
   const correctLogin = await verifyLogin(email, password);
@@ -28,5 +32,9 @@ const login = async (email: string, password: string) => {
   };
   return result;
 };
+
+// const loginValidate = async (auth: string) => {
+
+// };
 
 export default { login };
