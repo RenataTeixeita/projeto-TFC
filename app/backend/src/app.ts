@@ -25,13 +25,13 @@ class App {
     };
 
     this.app.use(accessControl);
+    this.app.post('/login', userController.login);
     // ...
   }
 
   // ...
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => console.log(`Rodando em http://localhost:${PORT}/`));
-    this.app.post('/login', userController.login);
   }
 }
 

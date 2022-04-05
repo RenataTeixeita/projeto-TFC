@@ -21,7 +21,7 @@ const login = async (email: string, password: string) => {
 
   const { id, username, role } = userSearch as unknown as UserI;
 
-  const token = createToken({ email, id, username, role });
+  const token = await createToken({ email, id, username, role });
   const result = {
     user: { id, username, role, email },
     token,
