@@ -11,16 +11,13 @@ import { app } from '../app';
 import Users from '../database/models/Users';
 
 import { Response } from 'superagent';
+// import verifyLogin from '../middlewares/verifyLogin';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
 describe('Verifica a rota Login', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
-
   let chaiHttpResponse: Response;
 
   before(async () => {
@@ -28,7 +25,6 @@ describe('Verifica a rota Login', () => {
       .stub(Users, "findOne")
       .onFirstCall()
       .resolves(
-          // ...<Seu mock>
           {
             id: 1,
             username: 'Admin',
@@ -51,7 +47,6 @@ describe('Verifica a rota Login', () => {
     chaiHttpResponse = await chai
        .request(app).post('/login')
        .send({ email: 'admin@admin.com', password: 'secret_admin' });
-    // console.log(chaiHttpResponse);
     expect(chaiHttpResponse.status).to.be.equal(200);
     expect(chaiHttpResponse.body).to.deep.equal(
       {
@@ -71,8 +66,13 @@ describe('Verifica a rota Login', () => {
     expect(chaiHttpResponse.status).to.be.equal(401);
     expect(chaiHttpResponse.body).to.deep.equal({ message: 'Incorrect email or password' });
   })
-
-  // it('Seu sub-teste', () => {
-  //   expect(false).to.be.eq(true);
-  // });
 });
+
+
+// describe ('Verifica se não é possível efetuar login sem e-mail ou password', () => {
+//   let chaiHttpResponse: Response;
+
+//   before (async () => {
+//     sinon.stub(verifyLogin, 'verifyLogin').resolves({ message: "All fields must be filled" })
+//   })
+// });
