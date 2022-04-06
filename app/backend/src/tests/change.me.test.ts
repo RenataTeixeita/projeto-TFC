@@ -67,10 +67,10 @@ describe('Verifica a rota Login', () => {
 });
 
 
-// describe ('Verifica se não é possível efetuar login sem e-mail ou password', () => {
-//   let chaiHttpResponse: Response;
+describe ('Verifica se não é possível efetuar login sem e-mail ou password', () => {
+  let chaiHttpResponse: Response;
 
-//   before (async () => {
-//     sinon.stub(verifyLogin, 'verifyLogin').resolves({ message: "All fields must be filled" })
-//   })
-// });
+  before (async () => {
+    sinon.stub(verifyLogin, 'verifyLogin').resolves({ message: "All fields must be filled" })
+  })
+});
