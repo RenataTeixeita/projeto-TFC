@@ -9,7 +9,7 @@ const findAll = async (_req: Request, res: Response) => {
 const saveMatch = async (req: Request, res: Response) => {
   const { body } = req;
   const saved = await matchsServices.saveMatch(body);
-  return res.status(200).json(saved);
+  return res.status(201).json(saved);
 };
 
 // const findInProgress = async (req: Request, res: Response) => {
