@@ -3,6 +3,7 @@ import * as cors from 'cors';
 import userController from './controllers/userController';
 import authToken from './middlewares/authToken';
 import clubsController from './controllers/clubsController';
+import matchsController from './controllers/matchsController';
 
 // https://medium.com/@pmhegdek/oop-in-typescript-express-server-d9368b97740e
 
@@ -31,6 +32,7 @@ class App {
     this.app.get('/login/validate', authToken.validateToken);
     this.app.get('/clubs', clubsController.findAll);
     this.app.get('/clubs/:id', clubsController.findById);
+    this.app.get('/matchs', matchsController.findAll);
     // ...
   }
 
