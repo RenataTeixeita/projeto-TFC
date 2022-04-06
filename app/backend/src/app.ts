@@ -30,6 +30,7 @@ class App {
     this.app.post('/login', userController.login);
     this.app.get('/login/validate', authToken.validateToken);
     this.app.get('/clubs', clubsController.findAll);
+    this.app.get('/clubs/:id', clubsController.findById);
     // ...
   }
 
