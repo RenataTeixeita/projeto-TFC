@@ -24,4 +24,4 @@ const tokenValidate = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-export default { tokenValidate };
+export default tokenValidate;
