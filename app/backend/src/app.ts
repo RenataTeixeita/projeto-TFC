@@ -35,6 +35,7 @@ class App {
     this.app.get('/clubs/:id', clubsController.findById);
     this.app.get('/matchs', matchsController.findAll);
     this.app.post('/matchs', tokenValidate.tokenValidate, matchsController.saveMatch);
+    this.app.patch('/matchs/:id/finish', matchsController.finished);
     // ...
   }
 

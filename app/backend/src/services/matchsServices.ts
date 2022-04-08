@@ -20,18 +20,13 @@ const saveMatch = async (body: InputMatch): Promise<OutputMatch> => {
   return newMatch;
 };
 
-// const findInProgress = async (inProgress: string) => {
-//   if (inProgress === 'false') {
-//     const fineshed = await Matchs.findOne({
-//       where: { inProgress },
-//       include: [
-//         { model: Clubs, as: 'homeClub', attributes: ['clubName'] },
-//         { model: Clubs, as: 'awayClub', attributes: ['clubName'] },
-//       ],
-//     });
-//     return fineshed;
-//   }
-//   return 'Nenhuma partida finalizada até o momento.';
-// };
+const finished = async (id: number) => {
+  await Matchs.update(
+    { inProgress: false },
+    { where: { id } },
+  );
+  const findMatch = await Matchs.findByPk(id);
+  return findMatch;
+};
 
-export default { findAll, saveMatch };
+export default { findAll, saveMatch, finished };

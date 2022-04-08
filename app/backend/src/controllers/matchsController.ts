@@ -12,13 +12,10 @@ const saveMatch = async (req: Request, res: Response) => {
   return res.status(201).json(saved);
 };
 
-// const findInProgress = async (req: Request, res: Response) => {
-//   const { inProgress } = req.query;
-//   const fineshed = await matchsServices.findInProgress(inProgress);
-//   if (typeof (fineshed) === null) {
-//     console.log('Nenhuma partida finalizada');
-//   }
-//   return res.status(200).json(fineshed);
-// };
+const finished = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const response = await matchsServices.finished(Number(id));
+  return res.status(200).json(response);
+};
 
-export default { findAll, saveMatch };
+export default { findAll, saveMatch, finished };
