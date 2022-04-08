@@ -29,4 +29,17 @@ const finished = async (id: number) => {
   return findMatch;
 };
 
-export default { findAll, saveMatch, finished };
+const upDateGoals = async (homeTeamGoals: string, awayTeamGoals: string, id: number) => {
+  // const statusGoals =
+  await Matchs.update(
+    {
+      homeTeamGoals,
+      awayTeamGoals,
+    },
+    { where: { id } },
+  );
+  const statusGoals = await Matchs.findByPk(id);
+  return statusGoals;
+};
+
+export default { findAll, saveMatch, finished, upDateGoals };

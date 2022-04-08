@@ -18,4 +18,11 @@ const finished = async (req: Request, res: Response) => {
   return res.status(200).json(response);
 };
 
-export default { findAll, saveMatch, finished };
+const upDateGoals = async (req: Request, res: Response) => {
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+  const { id } = req.params;
+  const response = await matchsServices.upDateGoals(homeTeamGoals, awayTeamGoals, Number(id));
+  return res.status(200).json(response);
+};
+
+export default { findAll, saveMatch, finished, upDateGoals };

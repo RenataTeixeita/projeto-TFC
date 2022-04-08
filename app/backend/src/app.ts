@@ -37,6 +37,7 @@ class App {
     this.app.get('/matchs', matchsController.findAll);
     this.app.post('/matchs', tokenValidate, validateMatch, matchsController.saveMatch);
     this.app.patch('/matchs/:id/finish', matchsController.finished);
+    this.app.patch('/matchs/:id', matchsController.upDateGoals);
     // ...
   }
 
