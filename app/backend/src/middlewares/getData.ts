@@ -24,16 +24,16 @@ const obj = {
   totalVictories: 0,
   totalDraws: 0,
   totalLosses: 0,
-  homeTeamGoals: 0,
-  awayTeamGoals: 0,
+  goalsFavor: 0,
+  goalsOwn: 0,
 };
 
 // Tive a ideia do reduce e o Roberval me ajudou a estruturar a função
 
 const getData = (matchs: MatchsI[], clubName: string) => {
   const matchsMap = matchs.reduce((acc, curr) => {
-    const { dataValues: { homeTeamGoals, awayTeamGoals } } = curr;
-    const testing = test(homeTeamGoals, awayTeamGoals);
+    const { dataValues: { goalsFavor, goalsOwn } } = curr;
+    const testing = test(goalsFavor, goalsOwn);
     const { totalPoints, totalVictories, totalDraws, totalLosses } = testing;
 
     return {
@@ -42,8 +42,8 @@ const getData = (matchs: MatchsI[], clubName: string) => {
       totalVictories: acc.totalVictories + totalVictories,
       totalDraws: acc.totalDraws + totalDraws,
       totalLosses: acc.totalLosses + totalLosses,
-      homeTeamGoals: acc.homeTeamGoals + homeTeamGoals,
-      awayTeamGoals: acc.awayTeamGoals + awayTeamGoals,
+      goalsFavor: acc.goalsFavor + goalsFavor,
+      goalsOwn: acc.goalsOwn + goalsOwn,
     };
   }, obj as SetData);
 

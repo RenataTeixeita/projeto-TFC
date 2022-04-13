@@ -1,6 +1,6 @@
 import Matchs from '../database/models/Matchs';
 import Clubs from '../database/models/Clubs';
-import { LeaderboardI, SetData } from '../interfaces/Leaderboard';
+import { LeaderboardI, LeaderboardW, SetData } from '../interfaces/Leaderboard';
 import getData from '../middlewares/getData';
 import orderByPoints from '../middlewares/orderResult';
 
@@ -9,11 +9,11 @@ import orderByPoints from '../middlewares/orderResult';
 
 const otherData = (dataClub: SetData) => {
   const { clubName, totalPoints, totalVictories,
-    totalDraws, totalLosses, homeTeamGoals, awayTeamGoals } = dataClub;
+    totalDraws, totalLosses, goalsFavor, goalsOwn } = dataClub;
   const totalGames = totalVictories + totalDraws + totalLosses;
-  const goalsBalance = homeTeamGoals - awayTeamGoals;
+  const goalsBalance = goalsFavor - goalsOwn;
   const efficiency = +((totalPoints / ((totalGames * 3))) * 100).toFixed(2);
-  
+
   return {
     name: clubName,
     totalPoints,
@@ -21,8 +21,8 @@ const otherData = (dataClub: SetData) => {
     totalVictories,
     totalDraws,
     totalLosses,
-    goalsFavor: homeTeamGoals,
-    goalsOwn: awayTeamGoals,
+    goalsFavor,
+    goalsOwn,
     goalsBalance,
     efficiency,
   };
@@ -34,10 +34,10 @@ const findAllHome = async () => {
       model: Matchs,
       as: 'homeClub',
       where: { inProgress: false },
-      // attributes: [
-      //   ['home_team_goals', 'goalsFavor'],
-      //   ['away_team_goals', 'goalsOwn'],
-      // ],
+      attributes: [
+        ['home_team_goals', 'goalsFavor'],
+        ['away_team_goals', 'goalsOwn'],
+      ],
     },
   }) as unknown as LeaderboardI[];
   const mapClubs = clubs.map((club) => {
@@ -50,19 +50,30 @@ const findAllHome = async () => {
   return allStats.sort(orderByPoints);
 };
 
-// const findAllAway = async () => {
-//   const clubs = await Clubs.findAll({
-//     include: {
-//       model: Matchs,
-//       as: 'awayMatchs',
-//       where: { inProgress: false },
-//       attributes: [
-//         ['home_team_goals', 'goalsFavor'],
-//         ['away_team_goals', 'goalsOwn'],
-//       ],
-//     },
-//   });
-//   return clubs;
-// };
+const findAllAway = async () => {
+  const clubs = await Clubs.findAll({
+    include: {
+      model: Matchs,
+      as: 'awayClub',
+      where: { inProgress: false },
+      attributes: [
+        ['home_team_goals', 'goalsOwn'],
+        ['away_team_goals', 'goalsFavor'],
+        ['away_team', 'awayTeamId'],
+      ],
+    },
+  }) as unknown as LeaderboardW[];
 
-export default { findAllHome };
+  // console.log(clubs);
+
+  const mapClubs = clubs.map((club) => {
+    const data = getData.getData(club.awayClub, club.clubName);
+    return data;
+  });
+
+  const allStats = mapClubs.map((value) => otherData(value));
+
+  return allStats.sort(orderByPoints);
+};
+
+export default { findAllHome, findAllAway };

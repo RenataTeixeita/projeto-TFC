@@ -1,7 +1,7 @@
 export interface MatchsI {
   dataValues: {
-    homeTeamGoals: number;
-    awayTeamGoals: number;
+    goalsFavor: number;
+    goalsOwn: number;
   }
 }
 
@@ -10,8 +10,23 @@ export interface LeaderboardI {
   homeClub: MatchsI[];
 }
 
+export interface LeaderboardW {
+  clubName: string;
+  awayClub: MatchsI[];
+}
+
 export interface SetData {
   clubName: string;
+  totalPoints: number;
+  totalVictories: number;
+  totalDraws: number;
+  totalLosses: number;
+  goalsFavor: number;
+  goalsOwn: number;
+}
+
+export interface SetDataW {
+  awayTeam: string;
   totalPoints: number;
   totalVictories: number;
   totalDraws: number;
