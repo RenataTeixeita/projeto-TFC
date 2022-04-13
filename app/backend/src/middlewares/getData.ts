@@ -35,6 +35,7 @@ const getData = (matchs: MatchsI[], clubName: string) => {
     const { dataValues: { homeTeamGoals, awayTeamGoals } } = curr;
     const testing = test(homeTeamGoals, awayTeamGoals);
     const { totalPoints, totalVictories, totalDraws, totalLosses } = testing;
+
     return {
       clubName,
       totalPoints: acc.totalPoints + totalPoints,
@@ -45,6 +46,7 @@ const getData = (matchs: MatchsI[], clubName: string) => {
       awayTeamGoals: acc.awayTeamGoals + awayTeamGoals,
     };
   }, obj as SetData);
+
   return matchsMap;
 };
 

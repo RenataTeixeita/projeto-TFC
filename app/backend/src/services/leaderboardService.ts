@@ -13,6 +13,7 @@ const otherData = (dataClub: SetData) => {
   const totalGames = totalVictories + totalDraws + totalLosses;
   const goalsBalance = homeTeamGoals - awayTeamGoals;
   const efficiency = +((totalPoints / ((totalGames * 3))) * 100).toFixed(2);
+  
   return {
     name: clubName,
     totalPoints,
