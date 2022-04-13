@@ -15,6 +15,7 @@ const test = (homeTeamGoals: number, awayTeamGoals: number) => {
   } else if (homeTeamGoals < awayTeamGoals) {
     totalLosses += 1;
   }
+
   return { totalPoints, totalVictories, totalDraws, totalLosses };
 };
 
@@ -23,6 +24,8 @@ const obj = {
   totalVictories: 0,
   totalDraws: 0,
   totalLosses: 0,
+  homeTeamGoals: 0,
+  awayTeamGoals: 0,
 };
 
 // Tive a ideia do reduce e o Roberval me ajudou a estruturar a função
@@ -38,8 +41,8 @@ const getData = (matchs: MatchsI[], clubName: string) => {
       totalVictories: acc.totalVictories + totalVictories,
       totalDraws: acc.totalDraws + totalDraws,
       totalLosses: acc.totalLosses + totalLosses,
-      homeTeamGoals,
-      awayTeamGoals,
+      homeTeamGoals: acc.homeTeamGoals + homeTeamGoals,
+      awayTeamGoals: acc.awayTeamGoals + awayTeamGoals,
     };
   }, obj as SetData);
   return matchsMap;
