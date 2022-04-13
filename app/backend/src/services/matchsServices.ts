@@ -30,7 +30,6 @@ const finished = async (id: number) => {
 };
 
 const upDateGoals = async (homeTeamGoals: string, awayTeamGoals: string, id: number) => {
-  // const statusGoals =
   await Matchs.update(
     {
       homeTeamGoals,

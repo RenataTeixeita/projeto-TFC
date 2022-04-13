@@ -4,6 +4,7 @@ import userController from './controllers/userController';
 import authToken from './middlewares/authToken';
 import clubsController from './controllers/clubsController';
 import matchsController from './controllers/matchsController';
+import leaderboard from './controllers/leaderboardController';
 import tokenValidate from './middlewares/tokenValidate';
 import validateMatch from './middlewares/validateMatch';
 
@@ -38,6 +39,7 @@ class App {
     this.app.post('/matchs', tokenValidate, validateMatch, matchsController.saveMatch);
     this.app.patch('/matchs/:id/finish', matchsController.finished);
     this.app.patch('/matchs/:id', matchsController.upDateGoals);
+    this.app.get('/leaderboard/home', leaderboard.findAllHome);
     // ...
   }
 
