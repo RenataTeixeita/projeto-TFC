@@ -1,4 +1,5 @@
-import { MatchsI, SetData } from '../interfaces/Leaderboard';
+import { MatchsI, SetData, TeamI, HalfClubI } from '../interfaces/Leaderboard';
+import orderByPoints from './orderResult';
 
 const test = (homeTeamGoals: number, awayTeamGoals: number) => {
   let totalPoints = 0;
@@ -50,4 +51,61 @@ const getData = (matchs: MatchsI[], clubName: string) => {
   return matchsMap;
 };
 
-export default { getData };
+const halfStats = (clubInfo: HalfClubI) => {
+  const { name, totalPoints, totalVictories, totalDraws,
+    totalLosses, totalGames, goalsFavor, goalsOwn } = clubInfo;
+  const goalsBalance = goalsFavor - goalsOwn;
+  const efficiency = +((totalPoints / ((totalGames * 3))) * 100).toFixed(2);
+
+  return {
+    name,
+    totalPoints,
+    totalGames,
+    totalVictories,
+    totalDraws,
+    totalLosses,
+    goalsFavor,
+    goalsOwn,
+    goalsBalance,
+    efficiency,
+  };
+};
+
+const allStats = (allHome: TeamI, allAway: TeamI) => {
+  const { name } = allHome;
+  const totalPoints = allHome.totalPoints + allAway.totalPoints;
+  const totalVictories = allHome.totalVictories + allAway.totalVictories;
+  const totalDraws = allHome.totalDraws + allAway.totalDraws;
+  const totalLosses = allHome.totalLosses + allAway.totalLosses;
+  const totalGames = allHome.totalGames + allAway.totalGames;
+  const goalsFavor = allHome.goalsFavor + allAway.goalsFavor;
+  const goalsOwn = allHome.goalsOwn + allAway.goalsOwn;
+
+  return {
+    name, totalPoints, totalVictories, totalDraws, totalLosses, totalGames, goalsFavor, goalsOwn,
+  };
+};
+
+const resultStats = (allHome: TeamI, allAway: TeamI) => {
+  const firstStep = allStats(allHome, allAway);
+  const secondStep = halfStats(firstStep);
+  return secondStep;
+};
+const mapperList = (allHome: TeamI[], allAway: TeamI[]) => {
+  let bigger = allHome;
+  let smaller = allAway;
+
+  if (allHome.length < allAway.length) {
+    bigger = allAway;
+    smaller = allHome;
+  }
+  const newList = bigger.map((club) => {
+    const searchClub = smaller.find((infoClub) => club.name === infoClub.name);
+    if (!searchClub) return 'false';
+    const updateClub = resultStats(club, searchClub);
+    return updateClub;
+  }) as TeamI[];
+  return newList.sort(orderByPoints);
+};
+
+export default { getData, mapperList };

@@ -64,8 +64,6 @@ const findAllAway = async () => {
     },
   }) as unknown as LeaderboardW[];
 
-  // console.log(clubs);
-
   const mapClubs = clubs.map((club) => {
     const data = getData.getData(club.awayClub, club.clubName);
     return data;
@@ -76,4 +74,12 @@ const findAllAway = async () => {
   return allStats.sort(orderByPoints);
 };
 
-export default { findAllHome, findAllAway };
+const filterTeam = async () => {
+  const allHome = await findAllHome();
+  const allAway = await findAllAway();
+
+  const newList = getData.mapperList(allHome, allAway);
+  return newList;
+};
+
+export default { findAllHome, findAllAway, filterTeam };

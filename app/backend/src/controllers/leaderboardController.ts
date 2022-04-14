@@ -11,4 +11,9 @@ const findAllAway = async (_req: Request, res: Response) => {
   return res.status(200).json(response);
 };
 
-export default { findAllHome, findAllAway };
+const filterTeam = async (_req: Request, res: Response) => {
+  const response = await leaderboardService.filterTeam();
+  return res.status(200).json(response);
+};
+
+export default { findAllHome, findAllAway, filterTeam };

@@ -15,6 +15,17 @@ export interface LeaderboardW {
   awayClub: MatchsI[];
 }
 
+export interface HalfClubI {
+  name: string;
+  totalPoints: number;
+  totalVictories: number;
+  totalDraws: number;
+  totalLosses: number;
+  totalGames: number;
+  goalsFavor: number;
+  goalsOwn: number;
+}
+
 export interface SetData {
   clubName: string;
   totalPoints: number;
