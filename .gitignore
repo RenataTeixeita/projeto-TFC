@@ -7,3 +7,8 @@ coverage
 front.eval
 back.eval
 .vscode
+trybe.yml
+/__tests__
+.github/*
+.trybe/*
+README.md
